@@ -4,6 +4,7 @@ import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import { createHash } from '../utils/createHash';
+import { checkPassword } from '../utils/checkPassword';
 
 @Injectable()
 export class UserService {
@@ -15,7 +16,7 @@ export class UserService {
   async addUser(userObj): Promise<string | Error> {
     try {
       const password = await createHash(userObj.password);
-      const user = {
+      const user: UserEntity = {
         ...userObj,
         userID: v4(),
         password,
@@ -26,15 +27,47 @@ export class UserService {
       return user.userID;
     } catch (err) {
       console.log(err);
-      return new HttpException(err.message, HttpStatus.CONFLICT);
+      if (err.code === `ER_DUP_ENTRY`) {
+        return new HttpException(err.message, HttpStatus.CONFLICT);
+      } else {
+        return new HttpException(
+          'Unexpected error',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
     }
   }
 
-  async getUserByEmail(email: string) {
+  async getUserByEmail(email: string): Promise<UserEntity | Error> {
+    try {
+      const [user] = await this.userEntityRepository.find({
+        where: {
+          email: email,
+        },
+      });
+      if (!user) {
+        return new HttpException('User doesnt exist', HttpStatus.NO_CONTENT);
+      }
+      return user;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  async getUserByID(userID: string): Promise<UserEntity[]> {
     return this.userEntityRepository.find({
       where: {
-        email: email,
+        userID: userID,
       },
     });
+  }
+  async deleteUser(userID: string, password: string): Promise<void> {
+    try {
+      const [user] = await this.getUserByID(userID);
+      const isPassValid = await checkPassword(password, user.password);
+      if (!isPassValid) return;
+      await this.userEntityRepository.delete(user);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
