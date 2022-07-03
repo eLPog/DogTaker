@@ -14,7 +14,6 @@ export class UserController {
 
   @Get()
   async getUserData(@Request() req) {
-    const user = await this.userService.getUserByEmail(req.user.email);
-    return user;
+    return await this.userService.getUserByEmail(req.user.email);
   }
 }

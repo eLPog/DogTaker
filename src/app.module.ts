@@ -8,6 +8,7 @@ import configuration from './config/dbConfig';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { AuthModule } from './auth/auth.module';
+import { DogsModule } from './dogs/dogs.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    DogsModule,
   ],
   controllers: [AppController],
   providers: [
