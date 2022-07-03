@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
+import { createHash } from '../utils/createHash';
 
 @Injectable()
 export class UserService {
@@ -13,9 +14,11 @@ export class UserService {
 
   async addUser(userObj): Promise<string | Error> {
     try {
+      const password = await createHash(userObj.password);
       const user = {
         ...userObj,
         userID: v4(),
+        password,
         numberOfWalks: 0,
         isAdmin: 0,
       };
