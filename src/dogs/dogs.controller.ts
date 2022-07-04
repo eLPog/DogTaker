@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { AddDogDto } from './dtos/addDog.dto';
 import { DogsService } from './dogs.service';
 
@@ -8,5 +8,13 @@ export class DogsController {
   @Post()
   async addDog(@Body() body: AddDogDto) {
     return await this.dogService.addDog(body);
+  }
+  @Get('/:dogID')
+  async getDog(@Param('dogID') dogID: string) {
+    return await this.dogService.getDogById(dogID);
+  }
+  @Delete('/:dogID')
+  async deleteDog(@Param('dogID') dogID: string) {
+    await this.dogService.deleteDog(dogID);
   }
 }
