@@ -5,15 +5,23 @@ export class DogsEntity {
   @PrimaryColumn()
   dogID: string;
 
-  @Column()
+  @Column({
+    length: 50,
+  })
   name: string;
 
-  @Column()
+  @Column({
+    length: 50,
+  })
   breed: string;
 
-  @Column()
+  @Column({
+    type: 'smallint',
+  })
   bornAt: number;
 
-  @Column()
+  @Column({
+    length: 500,
+  })
   description: string;
 }

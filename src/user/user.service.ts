@@ -5,8 +5,13 @@ import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import { createHash } from '../utils/createHash';
 import { checkPassword } from '../utils/checkPassword';
-import { EditUserInterface } from './interface/EditUserInterface';
-
+import { EditUserDto } from './dtos/editUser.dto';
+interface AddUserInterface {
+  name: string;
+  password: string;
+  description: string;
+  email: string;
+}
 @Injectable()
 export class UserService {
   constructor(
@@ -14,7 +19,7 @@ export class UserService {
     private userEntityRepository: Repository<UserEntity>,
   ) {}
 
-  async addUser(userObj): Promise<string | Error> {
+  async addUser(userObj: AddUserInterface): Promise<string | Error> {
     try {
       const password = await createHash(userObj.password);
       const user: UserEntity = {
@@ -72,7 +77,7 @@ export class UserService {
       console.log(err);
     }
   }
-  async editUser(userObj: EditUserInterface, userID: string) {
+  async editUser(userObj: EditUserDto, userID: string) {
     try {
       const user = await this.getUserByID(userID);
       const password = userObj.password
@@ -82,7 +87,7 @@ export class UserService {
       const newUser = {
         name: userObj.name ?? user.name,
         email: userObj.email ?? user.email,
-        password: password,
+        password,
         description: userObj.description ?? user.description,
       };
       const editedUser = {

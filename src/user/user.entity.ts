@@ -30,7 +30,7 @@ export class UserEntity {
   @Column({
     type: 'tinyint',
   })
-  isAdmin: 1 | 2;
+  isAdmin: 0 | 1;
 
   @Column({
     length: 500,

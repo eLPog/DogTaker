@@ -11,9 +11,8 @@ import { AddUserDto } from './dtos/addUser.dto';
 import { UserService } from './user.service';
 import { Public } from '../decorators/public-decorator';
 import { DeleteUserDto } from './dtos/deleteUser.dto';
-import { EditUserInterface } from './interface/EditUserInterface';
 import { UserDataToFrontEnd } from './interface/UserDataToFrontEnd';
-import { EditUserDto } from "./dtos/editUser.dto";
+import { EditUserDto } from './dtos/editUser.dto';
 
 @Controller('user')
 export class UserController {
