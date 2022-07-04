@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import { createHash } from '../utils/createHash';
 import { checkPassword } from '../utils/checkPassword';
+import { EditUserInterface } from './interface/EditUserInterface';
 
 @Injectable()
 export class UserService {
@@ -53,19 +54,42 @@ export class UserService {
       console.log(err);
     }
   }
-  async getUserByID(userID: string): Promise<UserEntity[]> {
-    return this.userEntityRepository.find({
+  async getUserByID(userID: string): Promise<UserEntity> {
+    const [user] = await this.userEntityRepository.find({
       where: {
         userID: userID,
       },
     });
+    return user;
   }
   async deleteUser(userID: string, password: string): Promise<void> {
     try {
-      const [user] = await this.getUserByID(userID);
+      const user = await this.getUserByID(userID);
       const isPassValid = await checkPassword(password, user.password);
       if (!isPassValid) return;
       await this.userEntityRepository.delete(user);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  async editUser(userObj: EditUserInterface, userID: string) {
+    try {
+      const user = await this.getUserByID(userID);
+      const password = userObj.password
+        ? await createHash(userObj.password)
+        : user.password;
+
+      const newUser = {
+        name: userObj.name ?? user.name,
+        email: userObj.email ?? user.email,
+        password: password,
+        description: userObj.description ?? user.description,
+      };
+      const editedUser = {
+        ...user,
+        ...newUser,
+      };
+      await this.userEntityRepository.save(editedUser);
     } catch (err) {
       console.log(err);
     }

@@ -12,7 +12,7 @@ export class AuthService {
 
   async validateUser(email: string, pass: string) {
     try {
-      const [user]: any = await this.userService.getUserByEmail(email);
+      const user: any = await this.userService.getUserByEmail(email);
       if (user && (await checkPassword(pass, user.password))) {
         const { password, ...result } = user;
         return result;
