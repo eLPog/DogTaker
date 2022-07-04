@@ -44,28 +44,24 @@ export class UserService {
     }
   }
 
-  async getUserByEmail(email: string): Promise<UserEntity | Error> {
+  async getUserByEmail(email: string): Promise<UserEntity | HttpStatus> {
     try {
-      const [user] = await this.userEntityRepository.find({
-        where: {
-          email: email,
-        },
+      const user = await this.userEntityRepository.findOneByOrFail({
+        email: email,
       });
       if (!user) {
-        return new HttpException('User doesnt exist', HttpStatus.NO_CONTENT);
+        return HttpStatus.NO_CONTENT;
       }
       return user;
     } catch (err) {
       console.log(err);
+      return HttpStatus.INTERNAL_SERVER_ERROR;
     }
   }
   async getUserByID(userID: string): Promise<UserEntity> {
-    const [user] = await this.userEntityRepository.find({
-      where: {
-        userID: userID,
-      },
+    return await this.userEntityRepository.findOneByOrFail({
+      userID: userID,
     });
-    return user;
   }
   async deleteUser(userID: string, password: string): Promise<void> {
     try {

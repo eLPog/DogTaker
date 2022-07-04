@@ -3,7 +3,6 @@ import { Repository } from 'typeorm';
 import { DogsEntity } from './dogs.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { v4 } from 'uuid';
-import { DogInterface } from './interface/DogInterface';
 
 @Injectable()
 export class DogsService {
@@ -12,8 +11,8 @@ export class DogsService {
   ) {}
 
   async addDog(
-    dogObj: Omit<DogInterface, 'dogID'>,
-  ): Promise<DogInterface | HttpStatus> {
+    dogObj: Omit<DogsEntity, 'dogID'>,
+  ): Promise<DogsEntity | HttpStatus> {
     try {
       const dog = {
         ...dogObj,
@@ -27,7 +26,7 @@ export class DogsService {
     }
   }
 
-  async getDogById(dogID: string): Promise<DogInterface | HttpException> {
+  async getDogById(dogID: string): Promise<DogsEntity | HttpException> {
     try {
       return await this.dogRepository.findOneByOrFail({
         dogID: dogID,
