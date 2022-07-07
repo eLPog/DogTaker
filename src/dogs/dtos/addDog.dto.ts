@@ -19,4 +19,6 @@ export class AddDogDto {
   @Length(20, 500)
   @Transform(({ value }: TransformFnParams) => value?.trim())
   description: string;
+
+
 }

@@ -24,4 +24,10 @@ export class DogsEntity {
     length: 500,
   })
   description: string;
+
+  @Column({
+    default: null,
+    nullable: true,
+  })
+  photoFn: string;
 }
