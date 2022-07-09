@@ -6,6 +6,8 @@ import { v4 } from 'uuid';
 import { createHash } from '../utils/createHash';
 import { checkPassword } from '../utils/checkPassword';
 import { EditUserDto } from './dtos/editUser.dto';
+import { Role } from './interface/RolesEnum';
+
 interface AddUserInterface {
   name: string;
   password: string;
@@ -27,7 +29,7 @@ export class UserService {
         userID: v4(),
         password,
         numberOfWalks: 0,
-        isAdmin: 0,
+        role: Role.USER,
       };
       await this.userEntityRepository.save(user);
       return user.userID;
@@ -44,18 +46,13 @@ export class UserService {
     }
   }
 
-  async getUserByEmail(email: string): Promise<UserEntity | HttpStatus> {
+  async getUserByEmail(email: string): Promise<UserEntity> {
     try {
-      const user = await this.userEntityRepository.findOneByOrFail({
+      return await this.userEntityRepository.findOneByOrFail({
         email: email,
       });
-      if (!user) {
-        return HttpStatus.NO_CONTENT;
-      }
-      return user;
     } catch (err) {
       console.log(err);
-      return HttpStatus.INTERNAL_SERVER_ERROR;
     }
   }
   async getUserByID(userID: string): Promise<UserEntity> {

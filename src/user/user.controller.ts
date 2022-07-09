@@ -6,6 +6,7 @@ import {
   Patch,
   Post,
   Request,
+  UseGuards,
 } from '@nestjs/common';
 import { AddUserDto } from './dtos/addUser.dto';
 import { UserService } from './user.service';
@@ -13,6 +14,8 @@ import { Public } from '../decorators/public-decorator';
 import { DeleteUserDto } from './dtos/deleteUser.dto';
 import { UserDataToFrontEnd } from './interface/UserDataToFrontEnd';
 import { EditUserDto } from './dtos/editUser.dto';
+import { Role } from './interface/RolesEnum';
+import { isAdminGuard } from './guards/isAdmin.guard';
 
 @Controller('user')
 export class UserController {
@@ -22,7 +25,7 @@ export class UserController {
   async addUser(@Body() body: AddUserDto) {
     return await this.userService.addUser(body);
   }
-
+  @UseGuards(isAdminGuard)
   @Get()
   async getUserData(@Request() req) {
     const user = await this.userService.getUserByID(req.user.userID);

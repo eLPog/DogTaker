@@ -8,6 +8,7 @@ import {
   Post,
   Res,
   UploadedFiles,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { AddDogDto } from './dtos/addDog.dto';
@@ -18,6 +19,7 @@ import { multerStorage, storageDir } from '../utils/storageDir';
 import * as path from 'path';
 import { MulterDiskUploadedFileInterface } from './interface/MulterDiskUploadedFileInterface';
 import { EditDogDto } from './dtos/editDog.dto';
+
 
 @Controller('dogs')
 export class DogsController {

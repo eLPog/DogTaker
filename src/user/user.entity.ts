@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Role } from './interface/RolesEnum';
 
 @Entity()
 export class UserEntity {
@@ -27,10 +28,8 @@ export class UserEntity {
   })
   numberOfWalks: number;
 
-  @Column({
-    type: 'tinyint',
-  })
-  isAdmin: 0 | 1;
+  @Column()
+  role: Role.USER | Role.ADMIN;
 
   @Column({
     length: 500,

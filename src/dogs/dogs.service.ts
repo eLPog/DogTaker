@@ -29,7 +29,7 @@ export class DogsService {
       const dog = {
         ...dogObj,
         dogID: v4(),
-        photoFn: myPhoto.filename,
+        photoFn: myPhoto?.filename,
       };
       await this.dogRepository.save(dog);
       return this.filter(dog);
