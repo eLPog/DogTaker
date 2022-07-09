@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Res,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -12,7 +13,7 @@ import { AddDogDto } from './dtos/addDog.dto';
 import { DogsService } from './dogs.service';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { Public } from '../decorators/public-decorator';
-import { storageDir } from '../utils/storageDir';
+import { multerStorage, storageDir } from '../utils/storageDir';
 import * as path from 'path';
 import { MulterDiskUploadedFileInterface } from './interface/MulterDiskUploadedFileInterface';
 
@@ -28,7 +29,7 @@ export class DogsController {
           maxCount: 1,
         },
       ],
-      { dest: path.join(storageDir(), 'photos') },
+      { storage: multerStorage(path.join(storageDir(), 'photos')) },
     ),
   )
   @Post('/')
@@ -46,5 +47,10 @@ export class DogsController {
   @Delete('/:dogID')
   async deleteDog(@Param('dogID') dogID: string) {
     await this.dogService.deleteDog(dogID);
+  }
+  @Public()
+  @Get('/photo/:photoID')
+  async getDogPhoto(@Param('dogID') dogID: string, @Res() res: any) {
+    return this.dogService.getPhoto(dogID, res);
   }
 }

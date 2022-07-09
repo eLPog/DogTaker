@@ -6,6 +6,8 @@ import { v4 } from 'uuid';
 import { DogInterface } from './interface/DogInterface';
 import { MulterDiskUploadedFileInterface } from './interface/MulterDiskUploadedFileInterface';
 import * as fsPromise from 'fs/promises';
+import { storageDir } from '../utils/storageDir';
+import * as path from 'path';
 
 @Injectable()
 export class DogsService {
@@ -66,6 +68,25 @@ export class DogsService {
     } catch (err) {
       console.log(err);
       return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+  }
+  async getPhoto(dogID: string, res: any) {
+    try {
+      const one = await this.dogRepository.findOneByOrFail({ dogID: dogID });
+      if (!one) {
+        throw new Error('Object not found');
+      }
+      if (!one.photoFn) {
+        throw new Error('This entity hat no Photo');
+      }
+      res.sendFile(one.photoFn, {
+        root: path.join(storageDir(), 'photos/'),
+      });
+    } catch (err) {
+      res.json({
+        error: err.message,
+      });
+      console.log(err);
     }
   }
 }
