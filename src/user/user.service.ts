@@ -73,7 +73,7 @@ export class UserService {
       console.log(err);
     }
   }
-  async editUser(userObj: EditUserDto, userID: string) {
+  async editUser(userObj: EditUserDto, userID: string): Promise<void> {
     try {
       const user = await this.getUserByID(userID);
       const password = userObj.password

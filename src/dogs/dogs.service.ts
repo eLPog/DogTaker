@@ -8,6 +8,7 @@ import { MulterDiskUploadedFileInterface } from './interface/MulterDiskUploadedF
 import * as fsPromise from 'fs/promises';
 import { storageDir } from '../utils/storageDir';
 import * as path from 'path';
+import { EditDogDto } from './dtos/editDog.dto';
 
 @Injectable()
 export class DogsService {
@@ -59,6 +60,35 @@ export class DogsService {
       );
     }
   }
+  async getAllDogs(): Promise<DogInterface[]> {
+    return await this.dogRepository.find();
+  }
+
+  async editDog(
+    dogID: string,
+    dogEditObj: EditDogDto,
+  ): Promise<void | HttpStatus> {
+    try {
+      const dog = await this.getDogById(dogID);
+      let editedDog;
+      if (!(dog instanceof HttpException)) {
+        editedDog = {
+          name: dogEditObj.name ?? dog.name,
+          breed: dogEditObj.breed ?? dog.breed,
+          bornAt: dogEditObj.bornAt ?? dog.bornAt,
+          description: dogEditObj.description ?? dog.description,
+        };
+        const newDog = {
+          ...dog,
+          ...editedDog,
+        };
+        await this.dogRepository.save(newDog);
+      }
+    } catch (err) {
+      console.log(err);
+      return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+  }
 
   async deleteDog(dogID: string): Promise<void | HttpStatus> {
     try {
@@ -70,16 +100,18 @@ export class DogsService {
       return HttpStatus.INTERNAL_SERVER_ERROR;
     }
   }
-  async getPhoto(dogID: string, res: any) {
+  async getPhoto(dogID: string, res: any): Promise<void> {
     try {
-      const one = await this.dogRepository.findOneByOrFail({ dogID: dogID });
-      if (!one) {
+      const dog = await this.dogRepository.findOneByOrFail({
+        dogID: dogID,
+      });
+      if (!dog) {
         throw new Error('Object not found');
       }
-      if (!one.photoFn) {
+      if (!dog.photoFn) {
         throw new Error('This entity hat no Photo');
       }
-      res.sendFile(one.photoFn, {
+      res.sendFile(dog.photoFn, {
         root: path.join(storageDir(), 'photos/'),
       });
     } catch (err) {

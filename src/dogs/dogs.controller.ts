@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Res,
   UploadedFiles,
@@ -16,6 +17,7 @@ import { Public } from '../decorators/public-decorator';
 import { multerStorage, storageDir } from '../utils/storageDir';
 import * as path from 'path';
 import { MulterDiskUploadedFileInterface } from './interface/MulterDiskUploadedFileInterface';
+import { EditDogDto } from './dtos/editDog.dto';
 
 @Controller('dogs')
 export class DogsController {
@@ -44,13 +46,22 @@ export class DogsController {
   async getDog(@Param('dogID') dogID: string) {
     return await this.dogService.getDogById(dogID);
   }
+  @Public()
+  @Get('/')
+  async getAllDogs() {
+    return this.dogService.getAllDogs();
+  }
   @Delete('/:dogID')
   async deleteDog(@Param('dogID') dogID: string) {
-    await this.dogService.deleteDog(dogID);
+    return await this.dogService.deleteDog(dogID);
   }
   @Public()
   @Get('/photo/:photoID')
   async getDogPhoto(@Param('dogID') dogID: string, @Res() res: any) {
     return this.dogService.getPhoto(dogID, res);
+  }
+  @Patch('/:dogID')
+  async editDog(@Param('dogID') dogID: string, @Body() body: EditDogDto) {
+    return await this.dogService.editDog(dogID, body);
   }
 }
