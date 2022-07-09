@@ -13,6 +13,10 @@ export class DogsService {
     @InjectRepository(DogsEntity) private dogRepository: Repository<DogsEntity>,
   ) {}
 
+  filter(dogObj: DogInterface) {
+    const { name, breed, bornAt, description, dogID } = dogObj;
+    return { name, breed, bornAt, description, dogID };
+  }
   async addDog(
     dogObj: Omit<DogInterface, 'dogID'>,
     files: MulterDiskUploadedFileInterface,
@@ -25,7 +29,7 @@ export class DogsService {
         photoFn: myPhoto.filename,
       };
       await this.dogRepository.save(dog);
-      return dog;
+      return this.filter(dog);
     } catch (err) {
       try {
         if (myPhoto) {
@@ -41,9 +45,10 @@ export class DogsService {
 
   async getDogById(dogID: string): Promise<DogInterface | HttpException> {
     try {
-      return await this.dogRepository.findOneByOrFail({
+      const dog = await this.dogRepository.findOneByOrFail({
         dogID: dogID,
       });
+      return this.filter(dog);
     } catch (err) {
       console.log(err);
       return new HttpException(

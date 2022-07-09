@@ -38,6 +38,7 @@ export class DogsController {
   ) {
     return await this.dogService.addDog(body, files);
   }
+  @Public()
   @Get('/:dogID')
   async getDog(@Param('dogID') dogID: string) {
     return await this.dogService.getDogById(dogID);
