@@ -10,6 +10,12 @@ export class WalksEntity {
   dateOfWalk: string;
   @Column()
   hourOfWalk: number;
+
+  @Column()
+  dogsDogID: string;
+  @Column()
+  usersUserID: string;
+
   @ManyToOne(() => DogsEntity, (dogs) => dogs.dogID)
   dogs: DogsEntity;
   @ManyToOne(() => UserEntity, (users) => users.userID)

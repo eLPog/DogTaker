@@ -1,9 +1,9 @@
-import { IsDate, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class AddWalkDto {
-  @IsDate()
+  @IsString()
   @IsNotEmpty()
-  dateOfWalk: Date;
+  dateOfWalk: string;
   @IsNumber()
   @IsNotEmpty()
   hourOfWalk: number;

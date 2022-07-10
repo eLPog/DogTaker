@@ -7,10 +7,10 @@ import { AddWalkDto } from './dtos/addWalk.dto';
 
 @Injectable()
 export class WalksService {
-  // constructor(
-  //   @InjectRepository(WalksEntity)
-  //   private walksEntityRepository: Repository<WalksEntity>,
-  // ) {}
+  constructor(
+    @InjectRepository(WalksEntity)
+    private walksEntityRepository: Repository<WalksEntity>,
+  ) {}
 
   async addWalk(dogID: string, userID: string, body: AddWalkDto) {
     const newWalk = {
@@ -20,5 +20,6 @@ export class WalksService {
       dogsDogID: dogID,
       usersUserID: userID,
     };
+    await this.walksEntityRepository.save(newWalk);
   }
 }
