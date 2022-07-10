@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { WalksEntity } from '../walks/walks.entity';
 
 @Entity()
 export class DogsEntity {
@@ -30,4 +31,6 @@ export class DogsEntity {
     nullable: true,
   })
   photoFn: string;
+
+
 }
