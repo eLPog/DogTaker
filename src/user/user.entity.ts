@@ -35,4 +35,7 @@ export class UserEntity {
     length: 500,
   })
   description: string;
+
+  @Column()
+  registerAt: string;
 }
