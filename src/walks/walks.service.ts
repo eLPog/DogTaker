@@ -28,11 +28,37 @@ export class WalksService {
     });
   }
   async getAllWalks() {
-    return await this.walksEntityRepository.find();
+    return await this.walksEntityRepository.find({
+      order: {
+        dateOfWalk: 'ASC',
+      },
+    });
   }
 
   async cancelWalk(walkID: string) {
     const walk = await this.findWalk(walkID);
     await this.walksEntityRepository.delete(walk);
+  }
+
+  async getAllUserWalks(userID: string) {
+    return await this.walksEntityRepository.find({
+      where: {
+        usersUserID: userID,
+      },
+      order: {
+        dateOfWalk: 'ASC',
+      },
+    });
+  }
+
+  async getDogWalks(dogID: string) {
+    return await this.walksEntityRepository.find({
+      where: {
+        dogsDogID: dogID,
+      },
+      order: {
+        dateOfWalk: 'ASC',
+      },
+    });
   }
 }

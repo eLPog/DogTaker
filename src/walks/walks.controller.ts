@@ -34,4 +34,12 @@ export class WalksController {
   async getAllWalks() {
     return await this.walksService.getAllWalks();
   }
+  @Get('/myWalks')
+  async getUserWalks(@Request() req) {
+    return await this.walksService.getAllUserWalks(req.user.sub);
+  }
+  @Get('/:dogID')
+  async getDogWalks(@Param('dogID') dogID: string) {
+    return await this.walksService.getDogWalks(dogID);
+  }
 }

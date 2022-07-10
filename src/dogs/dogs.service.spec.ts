@@ -18,7 +18,9 @@ describe('UserService', () => {
           useValue: {
             create: jest.fn(),
             save: jest.fn(),
-            findOneById: jest.fn(),
+            findOneByOrFail: jest
+              .fn()
+              .mockImplementation((el) => Promise.resolve(el)),
           },
         },
       ],
