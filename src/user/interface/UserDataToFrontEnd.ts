@@ -3,4 +3,5 @@ export interface UserDataToFrontEnd {
   email: string;
   description: string;
   numberOfWalks: number;
+  registerAt: string;
 }

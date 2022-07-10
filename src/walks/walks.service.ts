@@ -22,4 +22,17 @@ export class WalksService {
     };
     await this.walksEntityRepository.save(newWalk);
   }
+  async findWalk(walkID: string) {
+    return await this.walksEntityRepository.findOneByOrFail({
+      walkID: walkID,
+    });
+  }
+  async getAllWalks() {
+    return await this.walksEntityRepository.find();
+  }
+
+  async cancelWalk(walkID: string) {
+    const walk = await this.findWalk(walkID);
+    await this.walksEntityRepository.delete(walk);
+  }
 }

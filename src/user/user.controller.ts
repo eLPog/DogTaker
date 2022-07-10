@@ -24,22 +24,23 @@ export class UserController {
   }
   @Get()
   async getUserData(@Request() req) {
-    const user = await this.userService.getUserByID(req.user.userID);
+    const user = await this.userService.getUserByID(req.user.sub);
     const userToFront: UserDataToFrontEnd = {
       name: user.name,
       email: user.email,
       description: user.description,
       numberOfWalks: user.numberOfWalks,
+      registerAt: user.registerAt,
     };
     return userToFront;
   }
 
   @Delete()
   async deleteUser(@Request() req, @Body() body: DeleteUserDto) {
-    return await this.userService.deleteUser(req.user.userID, body.password);
+    return await this.userService.deleteUser(req.user.sub, body.password);
   }
   @Patch()
   async editUser(@Body() body: EditUserDto, @Request() req) {
-    return await this.userService.editUser(body, req.user.userID);
+    return await this.userService.editUser(body, req.user.sub);
   }
 }
