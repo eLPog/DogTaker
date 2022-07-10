@@ -7,11 +7,17 @@ export class WalksEntity {
   @PrimaryColumn()
   walkID: string;
   @Column()
-  dateOfWalk: Date;
+  dateOfWalk: string;
   @Column()
   hourOfWalk: number;
-  @ManyToOne(() => DogsEntity, (dog) => dog.dogID)
-  dog: DogsEntity;
+
+  @Column()
+  dogsDogID: string;
+  @Column()
+  usersUserID: string;
+
+  @ManyToOne(() => DogsEntity, (dogs) => dogs.dogID)
+  dogs: DogsEntity;
   @ManyToOne(() => UserEntity, (users) => users.userID)
   users: UserEntity;
 }

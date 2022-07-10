@@ -1,5 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
-import { WalksEntity } from '../walks/walks.entity';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class DogsEntity {

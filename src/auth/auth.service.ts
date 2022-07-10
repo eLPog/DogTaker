@@ -14,8 +14,8 @@ export class AuthService {
     try {
       const user: any = await this.userService.getUserByEmail(email);
       if (user && (await checkPassword(pass, user.password))) {
-        const { password, ...result } = user;
-        return result;
+        const { userID, email, role } = user;
+        return { userID, email, role };
       }
       return null;
     } catch (err) {
@@ -23,16 +23,6 @@ export class AuthService {
     }
   }
   login(user: any) {
-    const payload = {
-      username: user.name,
-      sub: user.userID,
-      email: user.email,
-      numberOfWalks: user.numberOfWalks,
-      description: user.description,
-      role: user.role,
-    };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    return { access_token: this.jwtService.sign(user) };
   }
 }

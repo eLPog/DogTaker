@@ -30,6 +30,7 @@ export class UserService {
         password,
         numberOfWalks: 0,
         role: Role.USER,
+        registerAt: new Date().toLocaleDateString(),
       };
       await this.userEntityRepository.save(user);
       return user.userID;
