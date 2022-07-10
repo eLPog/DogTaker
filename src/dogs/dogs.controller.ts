@@ -19,12 +19,12 @@ import { multerStorage, storageDir } from '../utils/storageDir';
 import * as path from 'path';
 import { MulterDiskUploadedFileInterface } from './interface/MulterDiskUploadedFileInterface';
 import { EditDogDto } from './dtos/editDog.dto';
-
+import { isAdminGuard } from '../user/guards/isAdmin.guard';
 
 @Controller('dogs')
 export class DogsController {
   constructor(private dogService: DogsService) {}
-  @Public()
+  @UseGuards(isAdminGuard)
   @UseInterceptors(
     FileFieldsInterceptor(
       [
@@ -53,6 +53,7 @@ export class DogsController {
   async getAllDogs() {
     return this.dogService.getAllDogs();
   }
+  @UseGuards(isAdminGuard)
   @Delete('/:dogID')
   async deleteDog(@Param('dogID') dogID: string) {
     return await this.dogService.deleteDog(dogID);
@@ -62,6 +63,7 @@ export class DogsController {
   async getDogPhoto(@Param('dogID') dogID: string, @Res() res: any) {
     return this.dogService.getPhoto(dogID, res);
   }
+  @UseGuards(isAdminGuard)
   @Patch('/:dogID')
   async editDog(@Param('dogID') dogID: string, @Body() body: EditDogDto) {
     return await this.dogService.editDog(dogID, body);
