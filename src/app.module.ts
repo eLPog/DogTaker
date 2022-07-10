@@ -9,6 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { AuthModule } from './auth/auth.module';
 import { DogsModule } from './dogs/dogs.module';
+import { WalksModule } from './walks/walks.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { DogsModule } from './dogs/dogs.module';
     UserModule,
     AuthModule,
     DogsModule,
+    WalksModule,
   ],
   controllers: [AppController],
   providers: [
