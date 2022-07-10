@@ -3,24 +3,21 @@ import { UserService } from './user.service';
 import { UserEntity } from './user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserModule } from './user.module';
-import { UserController } from './user.controller';
-
 describe('UserService', () => {
   let service: UserService;
-  let userEntityRepository;
+  let userEntityRepository: Repository<UserEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [],
+      imports: [UserEntity],
       providers: [
         UserService,
         {
           provide: getRepositoryToken(UserEntity),
           useValue: {
-            create: jest.fn(),
-            save: jest.fn(),
-            findOneByOrFail: jest.fn(),
+            findOneByOrFail: jest
+              .fn()
+              .mockImplementation((el) => Promise.resolve(el)),
           },
         },
       ],
@@ -39,9 +36,8 @@ describe('UserService', () => {
     expect(userEntityRepository).toBeDefined();
   });
   it('find user by email', async () => {
-    const user = await userEntityRepository.findOneBy({
-      email: 'test@test.com',
-    });
-    expect(user.name).toBeDefined();
+    const user = await service.getUserByEmail('dupa@test.com');
+    console.log(user);
+    expect(user).toBeDefined();
   });
 });
