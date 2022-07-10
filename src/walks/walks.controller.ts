@@ -11,6 +11,7 @@ export class WalksController {
     @Request() req,
     @Body() body: AddWalkDto,
   ) {
+    console.log(req.user);
     return await this.walksService.addWalk(dogID, req.user.sub, body);
   }
 }

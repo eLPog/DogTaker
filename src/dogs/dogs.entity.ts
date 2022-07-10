@@ -30,6 +30,4 @@ export class DogsEntity {
     nullable: true,
   })
   photoFn: string;
-
-
 }
