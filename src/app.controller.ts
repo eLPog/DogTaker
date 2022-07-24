@@ -22,7 +22,7 @@ export class AppController {
       res.cookie('jwt', jwt, {
         httpOnly: true,
         secure: true,
-        maxAge: 6 * 60 * 1000,
+        maxAge: 16 * 60 * 1000,
       });
       res.json(jwt);
     } catch (err) {

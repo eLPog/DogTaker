@@ -25,8 +25,8 @@ export class WalksController {
   }
 
   @Delete('/:walkID')
-  async deleteWalk(@Param('walkID') walkID: string) {
-    return this.walksService.cancelWalk(walkID);
+  async deleteWalk(@Param('walkID') walkID: string, @Request() req) {
+    return this.walksService.cancelWalk(walkID, req.user.sub);
   }
 
   @Get('/')
@@ -43,3 +43,4 @@ export class WalksController {
     return await this.walksService.getDogWalks(dogID);
   }
 }
+//@TODO 1.czy przy kasowaniu spaceru user jest twórcą spaceru. 2. Widok jednego spaceru.
