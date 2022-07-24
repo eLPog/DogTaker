@@ -25,11 +25,7 @@ export class WalksService {
     };
     await this.walksEntityRepository.save(newWalk);
   }
-  async findWalk(walkID: string) {
-    return await this.walksEntityRepository.findOneByOrFail({
-      walkID: walkID,
-    });
-  }
+
   async getAllWalks() {
     return await this.walksEntityRepository.find({
       order: {
@@ -37,7 +33,12 @@ export class WalksService {
       },
     });
   }
-
+  //I use this method only to check if user hat access to make some operations on DB
+  private async findWalk(walkID: string) {
+    return await this.walksEntityRepository.findOneByOrFail({
+      walkID: walkID,
+    });
+  }
   async checkAccess(walkID: string, userID: string) {
     const walk = await this.findWalk(walkID);
     const user = await this.userEntityRepository.findOneByOrFail({
@@ -64,6 +65,9 @@ export class WalksService {
         dateOfWalk: 'ASC',
       },
     });
+  }
+  async getWalk(walkID: string) {
+    return await this.findWalk(walkID);
   }
 
   async getDogWalks(dogID: string) {

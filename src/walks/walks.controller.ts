@@ -23,6 +23,10 @@ export class WalksController {
   ) {
     return await this.walksService.addWalk(dogID, req.user.sub, body);
   }
+  @Get('/:walkID')
+  async getWalk(@Param('walkID') walkID: string) {
+    return await this.walksService.getWalk(walkID);
+  }
 
   @Delete('/:walkID')
   async deleteWalk(@Param('walkID') walkID: string, @Request() req) {
