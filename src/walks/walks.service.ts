@@ -1,15 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from '@nestjs/typeorm';
 import { WalksEntity } from './walks.entity';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import { AddWalkDto } from './dtos/addWalk.dto';
+import { UserEntity } from '../user/user.entity';
 
 @Injectable()
 export class WalksService {
   constructor(
     @InjectRepository(WalksEntity)
     private walksEntityRepository: Repository<WalksEntity>,
+    @InjectRepository(UserEntity)
+    private userEntityRepository: Repository<UserEntity>,
   ) {}
 
   async addWalk(dogID: string, userID: string, body: AddWalkDto) {
@@ -35,8 +38,14 @@ export class WalksService {
     });
   }
 
-  async cancelWalk(walkID: string) {
+  async cancelWalk(walkID: string, userID: string) {
     const walk = await this.findWalk(walkID);
+    const user = await this.userEntityRepository.findOneByOrFail({
+      userID: userID,
+    });
+    if (walk.usersUserID !== user.userID) {
+      return HttpStatus.FORBIDDEN;
+    }
     await this.walksEntityRepository.delete(walk);
   }
 
