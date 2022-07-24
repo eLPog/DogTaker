@@ -44,3 +44,4 @@ export class WalksController {
   }
 }
 //@TODO 1.czy przy kasowaniu spaceru user jest twórcą spaceru. 2. Widok jednego spaceru.
+// 3. Wyszukiwanie z query dla getAllWalks for admin
