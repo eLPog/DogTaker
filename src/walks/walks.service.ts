@@ -26,7 +26,7 @@ export class WalksService {
     await this.walksEntityRepository.save(newWalk);
   }
 
-  async getAllWalks() {
+  async getAllWalks(): Promise<any> {
     return await this.walksEntityRepository.find({
       order: {
         dateOfWalk: 'ASC',

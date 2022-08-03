@@ -7,6 +7,7 @@ import {
   Delete,
   Get,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { AddWalkDto } from './dtos/addWalk.dto';
 import { WalksService } from './walks.service';
@@ -47,5 +48,4 @@ export class WalksController {
     return await this.walksService.getDogWalks(dogID);
   }
 }
-//@TODO 1.czy przy kasowaniu spaceru user jest twórcą spaceru. 2. Widok jednego spaceru.
-// 3. Wyszukiwanie z query dla getAllWalks for admin
+
