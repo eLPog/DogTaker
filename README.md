@@ -21,11 +21,11 @@
 
 * authentication takes place in the auth folder.
 
-* Several levels of access: user, user who is logged in, admin
+* Several levels of access: not logged user, registered user, admin
 
 * The logged user can book a date for a walk with the selected dog
 
-* Admin has access to all data contained on the website, has the ability to manipulate data and preview them (still in progress)
+* Admin has access to all data contained on the website, can add new dogs with photos, check all booked dates and so on. (still in progress)
 
 
 ## Database: ##
