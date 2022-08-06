@@ -2,38 +2,32 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
-## Description
+# Dog taker #
+ 
+ ## Book a date for a walk with the dog from the shelter ##
+ ## The application has a typical nest structure: ##
+  * Folders are divided according to what they are responsible for
+  * Each folder contains a module file with configuration, a controller file that performs the tasks of a router, and a service file that contains all the logic
+  * Config file contains configuration data
+  * Auth folder: contains logic responsible for user authorization and authentication (JWT token saved to cookie - http only + secure properties)
+  * Utils: Additional functions
+  * The tests folder contains tests - in progress.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## User registration and login: ##
 
-## Installation
+* authorization and authentication is done using the json web token
 
-```bash
-$ npm install
-```
+* the password is stored in the database as a hash
 
-## Running the app
+* authentication takes place in the auth folder.
 
-```bash
-# development
-$ npm run start
+* Several levels of access: user, user who is logged in, admin
 
-# watch mode
-$ npm run start:dev
+* The logged user can book a date for a walk with the selected dog
 
-# production mode
-$ npm run start:prod
-```
+* Admin has access to all data contained on the website, has the ability to manipulate data and preview them (still in progress)
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+## Database: ##
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-
+* The application is built on a relational database. All data needed to properly connect to the database should be implemented as environment variables
