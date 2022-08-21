@@ -31,3 +31,31 @@
 ## Database: ##
 
 * The application is built on a relational database. All data needed to properly connect to the database should be implemented as environment variables
+<h1>Codes examples</h1>
+<hr>
+<p>User authorization service.</p>
+<img src="https://user-images.githubusercontent.com/89840843/185795505-a423da66-f383-4dcd-946e-be75238ac8bc.png"><hr>
+
+<p>Database connection settings.</p>
+<img src="https://user-images.githubusercontent.com/89840843/185795603-46acaca6-d47c-4c2b-97d6-5e4ac99d6de3.png"><hr>
+
+<p>Guard - check if user has admin role. If note - endpoints with this guard are blocked.</p>
+<img src="https://user-images.githubusercontent.com/89840843/185795652-5916bdb5-3dda-49ff-bdc6-3d293f690aeb.png"><hr>
+
+<p>DTO by register new user</p>
+<img src="https://user-images.githubusercontent.com/89840843/185795670-abb6649c-4c40-4721-9954-eafbdb70a602.png"><hr>
+
+<p>User service - example on add new user function</p>
+<img src="https://user-images.githubusercontent.com/89840843/185795715-e06897fc-eb65-4df8-bc4e-d229dbe999ad.png"><hr>
+
+<p>Entity with user table - SQL Database</p>
+<img src="https://user-images.githubusercontent.com/89840843/185795759-cae70717-a7da-48bb-aa07-603c84bc4545.png"><hr>
+<h2>Status</h2>
+<p>In progress</p>
+<h2>Setup</h2>
+<ul>
+<li>use git clone https://github.com/eLPog/DogTaker</li>
+<li>run your sql server locally and add own database</li>
+<li>set your settings with environment variables</li>
+<li>run app with npm start - all database tables will be created automatically</li>
+</ul>
