@@ -12,6 +12,7 @@
   * Auth folder: contains logic responsible for user authorization and authentication (JWT token saved to cookie - http only + secure properties)
   * Utils: Additional functions
   * The tests folder contains tests - in progress.
+  * Database operations using typeORM
 
 ## User registration and login: ##
 
